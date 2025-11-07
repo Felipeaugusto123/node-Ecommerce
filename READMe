@@ -1,0 +1,239 @@
+# 🛒 Node E-commerce API
+
+Este projeto é uma API RESTful desenvolvida com Node.js, Express, Prisma, JWT, Passport e bcrypt, simulando as principais funcionalidades de um e-commerce.
+Foi desenvolvida com fins de aprendizado e prática de autenticação, banco de dados relacional e boas práticas de arquitetura.
+## 🚀 Tecnologias utilizadas
+
+    Node.js
+
+    Express
+
+    Prisma ORM
+
+    PostgreSQL
+
+    JWT (JSON Web Token)
+
+    Passport.js
+
+    bcrypt
+
+    TypeScript (opcional se estiver usando)
+
+## 📂 Estrutura das rotas
+###  👤 Autenticação
+#### POST /auth/signup ##### 
+
+##### Cria um novo usuário.
+
+Request body:
+
+{
+  "name": "Felipe",
+  "email": "felipe@gmail.com",
+  "password": "123456"
+}
+
+Response:
+
+{
+  "message": "Usuário criado com sucesso!"
+}
+
+#### POST /auth/signin
+
+Realiza login e retorna o token JWT.
+
+Request body:
+
+{
+  "email": "felipe@gmail.com",
+  "password": "123456"
+}
+
+Response:
+
+{
+  "token": "seu_token_aqui"
+}
+
+### 🛍️ Market (Carrinho)
+#### GET /market
+
+Retorna o carrinho do usuário logado.
+
+Headers:
+text
+
+Authorization: Bearer {token}
+
+Response:
+
+{
+  "market": [
+    {
+      "id": 1,
+      "quantity": 2,
+      "marketId": 3,
+      "productId": 4,
+      "product": {
+        "name": "computador",
+        "stock": 10,
+        "price": 25000,
+        "category": "tecnologia"
+      }
+    }
+  ]
+}
+
+#### POST /market
+
+Adiciona um produto ao carrinho do usuário logado.
+
+Headers:
+text
+
+Authorization: Bearer {token}
+
+Request body:
+
+{
+  "productId": 4,
+  "quantity": 2
+}
+
+Response:
+
+{
+  "message": "ITEM ADICIONADO AO CARRINHO"
+}
+
+#### DELETE /market/:id
+
+Remove um item do carrinho.
+
+Headers:
+text
+
+Authorization: Bearer {token}
+
+Response:
+
+{
+  "message": "ITEM DELETADO"
+}
+
+### 📦 Produtos
+#### GET /products
+
+Retorna todos os produtos.
+
+Response:
+
+[
+  {
+    "id": 2,
+    "name": "bola de futebol",
+    "price": 15,
+    "stock": 20,
+    "category": "Esportes"
+  },
+  {
+    "id": 3,
+    "name": "televisão",
+    "price": 2000,
+    "stock": 5,
+    "category": "tecnologia"
+  }
+]
+
+#### GET /products/category
+
+Filtra produtos por categoria.
+
+Query params:
+text
+
+/products/category?name=tecnologia
+
+Response:
+
+[
+  {
+    "id": 3,
+    "name": "televisão",
+    "price": 2000,
+    "stock": 5,
+    "category": "tecnologia"
+  }
+]
+
+GET /products/:id
+
+Retorna um produto específico pelo ID.
+
+Response:
+
+{
+  "product": {
+    "id": 3,
+    "name": "televisão",
+    "price": 2000,
+    "stock": 5,
+    "category": "tecnologia"
+  }
+}
+
+## 🔐 Autenticação
+
+O sistema usa JWT (JSON Web Token) com Passport.js para autenticação e autorização.
+
+    O token é gerado ao fazer login (/auth/signin)
+
+    Deve ser enviado no header das rotas protegidas:
+    text
+
+Authorization: Bearer {seu_token}
+
+## 🧠 Funcionalidades principais
+
+    Criação e login de usuários com senhas criptografadas (bcrypt)
+
+    Autenticação JWT com middleware de rota protegida (Passport)
+
+    CRUD básico de produtos
+
+    Adição, listagem e remoção de itens do carrinho de compras
+
+    Banco de dados relacional com Prisma ORM
+
+# ⚙️ Como rodar o projeto
+
+# Clonar o repositório
+git clone https://github.com/Felipeaugusto123/node-ecommerce.git
+
+# Entrar na pasta
+cd node-ecommerce
+
+# Instalar dependências
+npm install
+
+# Criar o arquivo .env
+# Adicionar as variáveis:
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/nome_do_banco?schema=public"
+JWT_SECRET="sua_chave_secreta"
+
+# Gerar o client do Prisma
+npx prisma generate
+
+# Rodar as migrações
+npx prisma migrate dev
+
+# Iniciar o servidor
+npm run dev
+
+👨‍💻 Autor
+
+Felipe Augusto Rodrigues Martins
+📧 E-mail: felipeaugustorodriguesmartin@gmail.com
+🐙 GitHub
